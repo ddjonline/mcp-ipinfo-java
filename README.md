@@ -32,6 +32,24 @@ The project includes a comprehensive suite of unit tests covering URL constructi
 mvn test
 ```
 
+## Local testing using MCP Inspector
+
+The easiest and most visually appealing way to test the MCP Server is to use the [MCP Inspector](https://github.com/ModelContextProtocol/mcp-inspector).
+
+Install the latest LTS version of Node and NPM which should contain the `npx` command line tool which will download and run the package inline.
+
+```bash
+npx @modelcontextprotocol/inspector java -jar target/mcp-ipinfo-java-1.0.0.jar 
+```
+
+This should automatically open the inspector tool at [http://localhost:6274](http://localhost:6274)
+
+Click the "Connect" button in the left side panel.
+
+Click "List Tools" in the middle "Tools" panel and verify the tools are correct.
+
+Click on the `lookup_ip` tool instance and enter an external IP in the right side panel's input field.
+
 ## Configuration and Running
 
 The server communicates via standard input/output (`stdio`) using JSON-RPC 2.0.
@@ -51,7 +69,7 @@ java -jar target/mcp-ipinfo-1.0.0.jar
 
 To use this server with Claude Desktop, add the following entry to your `claude_desktop_config.json` (typically located at `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS or `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
 
-```json
+```json 
 {
   "mcpServers": {
     "ipinfo": {

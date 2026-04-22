@@ -17,7 +17,14 @@ public class IpInfoMcpServer {
         var client = new IpInfoClient(token);
         var jsonMapper = new JacksonMcpJsonMapper(JsonMapper.builder().build());
         var transportProvider = new StdioServerTransportProvider(jsonMapper);
-        buildServer(transportProvider, jsonMapper, client);
+
+        var server = buildServer(transportProvider, jsonMapper, client);
+        try {
+            // Keep the application running to handle requests from stdin
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     static McpSyncServer buildServer(McpServerTransportProvider transportProvider, McpJsonMapper jsonMapper, IpInfoClient client) {
