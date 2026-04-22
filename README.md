@@ -22,7 +22,7 @@ To package the application into a "fat" JAR (including all dependencies), run:
 mvn clean package
 ```
 
-The executable JAR will be generated at `target/mcp-ipinfo-1.0.0.jar`, along with a Software Bill of Materials (SBOM) at `target/mcp-ipinfo-YYYYMMDD-HHMMSS-sbom.xml`.
+The executable JAR will be generated at `target/mcp-ipinfo-java-1.0.0.jar`, along with a Software Bill of Materials (SBOM) at `target/mcp-ipinfo-java-YYYYMMDD-HHMMSS-sbom.xml`.
 
 ## Running Tests
 
@@ -61,8 +61,43 @@ The server communicates via standard input/output (`stdio`) using JSON-RPC 2.0.
 ### Manual Execution
 
 ```bash
+mvn -U clean package
 export IPINFO_TOKEN=your_token_here
-java -jar target/mcp-ipinfo-1.0.0.jar
+java -jar target/mcp-ipinfo-java-1.0.0.jar
+```
+
+Example initialize
+
+```json
+{
+  "method": "initialize"
+}
+```
+
+Example tools list
+
+```json
+{
+  "method": "tools/list",
+  "params": {}
+}
+```
+
+Example `lookup_ip` tools call
+
+```json
+{
+  "method": "tools/call",
+  "params": {
+    "name": "lookup_ip",
+    "arguments": {
+      "ip": "some.random.ip.address"
+    },
+    "_meta": {
+      "progressToken": 0
+    }
+  }
+}
 ```
 
 ### Usage with Claude Desktop
@@ -76,7 +111,7 @@ To use this server with Claude Desktop, add the following entry to your `claude_
       "command": "java",
       "args": [
         "-jar",
-        "/absolute/path/to/mcp-ipinfo/target/mcp-ipinfo-1.0.0.jar"
+        "/absolute/path/to/mcp-ipinfo/target/mcp-ipinfo-java-1.0.0.jar"
       ],
       "env": {
         "IPINFO_TOKEN": "your_token_here"
